@@ -1,16 +1,23 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import styles from "../styles/Home.module.css";
 import Image from 'next/image'
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 
 export default function Home() {
 
   const { data: session } = useSession()
 
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
   const onSubmit = (e : FormEvent) => {
     e.preventDefault();
-    signIn('credentials')
+    
+
+    signIn("credentials", { email: email, password: password })
   }
+
+
 
   if(session){
     return(
@@ -26,14 +33,14 @@ export default function Home() {
     <div className={styles.container}>
       <form className={styles.contInps} onSubmit={(e)=> onSubmit(e)}>
         <h2>Faça login</h2>
-        <input type="email" name="email" placeholder="email" />
-        <input type="password" name="password" placeholder="senha" />
+        <input type="email" name="email" placeholder="email" id="email" onChange={(e) => setEmail(e.target.value)} />
+        <input type="password" name="password" placeholder="senha" id="senha" onChange={(e) => setPassword(e.target.value)}/>
         <button type="submit">Login</button>
       </form>
       <hr />
       <div className={styles.btmDiv}>
         <h3>Ou faça login com:</h3>
-        <button onClick={() => signIn()}>Google</button>
+        <button onClick={() => signIn('google')}>Google</button>
       </div>
     </div>
   );

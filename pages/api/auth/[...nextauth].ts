@@ -10,20 +10,17 @@ export const authOptions = {
     }),
     CredentialsProvider({
       name: "NextAuthCredentials",
-      credentials: {},
+      credentials: {
+        email: { label: "Email", type: "email", placeholder: "example@gmail.com" },
+        password: { label: "Password", type: "password" }
+      },
       async authorize(credentials, req) {
 
-
-        const  {email, password} = credentials as {
-          email: string,
-          password: string
-        }
-         
-        console. log(credentials, req)
+        console. log(credentials)
 
         return {
           id: "1",
-          name: "Gabriel P",
+          name: credentials?.email,
           email: "gepe@exemplo.com",
         };
       },
